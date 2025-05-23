@@ -1,0 +1,53 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selección de Personaje - Avatar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"> <!-- O tu ruta al CSS -->
+</head>
+<body>
+  <main class="contenedor">
+    <h1>La Leyenda de Aang: El Avatar</h1>
+    <h2>Elegí tu personaje</h2>
+
+    <div class="personajes-seleccion" id="personajesSeleccion">
+      <!-- Se podría usar <button> directamente o un div con role="button" y tabindex="0" -->
+      <!-- Opción 1: Usando <button> (recomendado para simplicidad y accesibilidad) -->
+      <button class="personaje" data-nombre="Aang">
+        <img src="assets/aang.png" alt="Aang, Maestro del Aire">
+        <p>Aang (Aire)</p>
+      </button>
+      <button class="personaje" data-nombre="Katara">
+        <img src="assets/katara.png" alt="Katara, Maestra del Agua">
+        <p>Katara (Agua)</p>
+      </button>
+      <button class="personaje" data-nombre="Toph">
+        <img src="assets/toph.png" alt="Toph Beifong, Maestra de la Tierra">
+        <p>Toph (Tierra)</p>
+      </button>
+      <button class="personaje" data-nombre="Zuko">
+        <img src="assets/zuko.png" alt="Zuko, Maestro del Fuego">
+        <p>Zuko (Fuego)</p>
+      </button>
+
+      <!-- Opción 2: Usando <div> (requiere más trabajo para accesibilidad si no se usan botones)
+           Si eliges esta, asegúrate de añadir tabindex="0" y role="button" y manejar eventos de teclado en JS.
+      <div class="personaje" data-nombre="Aang" role="button" tabindex="0">
+        <img src="assets/aang.png" alt="Aang, Maestro Aire">
+        <p>Aang (Aire)</p>
+      </div>
+      ...etc...
+      -->
+    </div>
+
+    <div class="acciones">
+      <!-- Los onclick se quitarán y se manejarán en JS -->
+      <button id="btnConfirmar" disabled>Confirmar selección</button>
+      <button id="btnCombate" disabled>Iniciar combate</button>
+    </div>
+  </main>
+  <script src="scripts/script.js"></script>
+</body>
+
