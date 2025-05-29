@@ -1,70 +1,79 @@
-// Variables globales
+// Variable para almacenar el personaje seleccionado por el jugador
 let personajeJugadorSeleccionado = null;
 
-// Elementos del DOM
+// Referencia al contenedor de los personajes
 const seccionPersonajes = document.getElementById('personajesSeleccion');
-const botonesPersonaje = document.querySelectorAll('.personaje'); // Si usaste <button>
-// Si usaste <div class="personaje">: const botonesPersonaje = document.querySelectorAll('.personaje[role="button"]');
-const btnConfirmar = document.getElementById('btnConfirmar');
-const btnCombate = document.getElementById('btnCombate');
 
-// Event Listeners para los personajes
+// Selecciona todos los botones que representan personajes
+const botonesPersonaje = document.querySelectorAll('.personaje'); // Si usaste <button>
+
+// Referencias a los botones de acción
+const btnConfirmar = document.getElementById('btnConfirmar'); // Botón para confirmar selección
+const btnCombate = document.getElementById('btnCombate'); // Botón para iniciar el combate
+
+// Función para que la PC elija un personaje aleatoriamente
+function aleatoria() {
+  // Lista de nombres de personajes disponibles
+  const personajes = ['Aang', 'Katara', 'Toph', 'Zuko'];
+  
+  // Selecciona un índice aleatorio de la lista
+  const indiceAleatorio = Math.floor(Math.random() * personajes.length);
+  
+  // Obtiene el nombre del personaje seleccionado
+  const personajePC = personajes[indiceAleatorio];
+  
+  // Muestra el personaje elegido por la PC
+  console.log(`La PC ha elegido a ${personajePC}`);
+  alert(`La PC ha elegido a ${personajePC}`);
+  
+  return personajePC; // Devuelve el personaje seleccionado
+}
+
+// Agrega un evento a cada botón de personaje
 botonesPersonaje.forEach(boton => {
   boton.addEventListener('click', () => {
-    // Primero, quitar la clase 'seleccionado' de cualquier otro personaje
+    // Elimina la clase 'seleccionado' de todos los botones
     botonesPersonaje.forEach(btn => btn.classList.remove('seleccionado'));
-    // Luego, añadirla al clickeado
+    // Agrega la clase 'seleccionado' al botón clickeado
     boton.classList.add('seleccionado');
 
-    personajeJugadorSeleccionado = boton.dataset.nombre; // Obtener nombre del data-attribute
-    console.log("Personaje elegido:", personajeJugadorSeleccionado);
-    btnConfirmar.disabled = false; // Habilitar botón de confirmar
-    // Opcionalmente, podrías deshabilitar el botón de combate aquí si "Confirmar" es un paso intermedio
-    // btnCombate.disabled = true;
-  });
+    // Guarda el nombre del personaje seleccionado en la variable
+    personajeJugadorSeleccionado = boton.dataset.nombre; 
+    console.log("Personaje elegido:", personajeJugadorSeleccionado); // Muestra en consola el personaje elegido
 
-  // Para accesibilidad si usaste divs en lugar de botones:
-  // boton.addEventListener('keydown', (event) => {
-  //   if (event.key === 'Enter' || event.key === ' ') {
-  //     event.preventDefault(); // Prevenir scroll con la barra espaciadora
-  //     boton.click(); // Simular click
-  //   }
-  // });
+    // Habilita el botón de confirmar selección
+    btnConfirmar.disabled = false; 
+  });
 });
 
-// Event Listener para el botón Confirmar
+// Evento para el botón de confirmar selección
 btnConfirmar.addEventListener('click', () => {
   if (personajeJugadorSeleccionado) {
+    // Muestra un mensaje de confirmación con el personaje seleccionado
     alert(`Has confirmado a ${personajeJugadorSeleccionado}!`);
-    // Aquí podrías, por ejemplo, mostrar al enemigo o más detalles del personaje
-    btnCombate.disabled = false; // Habilitar botón de iniciar combate
-    btnConfirmar.disabled = true; // Deshabilitar confirmar una vez hecho
-    // Opcional: Deshabilitar la selección de personajes
-    // botonesPersonaje.forEach(boton => boton.disabled = true);
+    // Habilita el botón de combate y deshabilita el de confirmar
+    btnCombate.disabled = false; 
+    btnConfirmar.disabled = true; 
   } else {
+    // Muestra un mensaje de error si no se seleccionó un personaje
     alert("Por favor, selecciona un personaje primero.");
   }
 });
 
-// Event Listener para el botón Iniciar Combate
+// Evento para el botón de iniciar combate
 btnCombate.addEventListener('click', () => {
   if (personajeJugadorSeleccionado) {
-    alert(`¡Combate iniciado con ${personajeJugadorSeleccionado}!`);
-    // Aquí iría la lógica para pasar a la pantalla de combate
-    // Por ejemplo: window.location.href = 'combate.html';
+    // La PC elige su personaje
+    const personajePC = aleatoria();
+    // Muestra un mensaje indicando que el combate ha comenzado
+    alert(`¡Combate iniciado! Tú: ${personajeJugadorSeleccionado} vs PC: ${personajePC}`);
   } else {
-    // Esto no debería pasar si el botón está bien deshabilitado
+    // Muestra un mensaje de error si no hay personaje seleccionado
     alert("Error: Ningún personaje seleccionado para el combate.");
   }
 });
 
-// Inicialización (opcional, por si quieres un estado inicial específico)
+// Evento que se ejecuta cuando la página termina de cargar
 window.addEventListener('load', () => {
-  // Podrías poner aquí cualquier lógica que necesites al cargar la página
-  console.log("Página de selección de personaje cargada.");
+  console.log("Página de selección de personaje cargada."); // Mensaje en consola para indicar que la página está lista
 });
-
-// Funciones que tenías (puedes adaptarlas o integrarlas)
-// function seleccionarPersonajeJugador(nombre) { /* ... ya integrado arriba ... */ }
-// function confirmarSeleccion() { /* ... ya integrado arriba ... */ }
-// function iniciarCombate() { /* ... ya integrado arriba ... */ }
