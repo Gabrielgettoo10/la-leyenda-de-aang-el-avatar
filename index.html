@@ -1,59 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <!-- Configuración básica del documento -->
-  <meta charset="UTF-8"> <!-- Codificación de caracteres -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Escalado responsivo para dispositivos móviles -->
-  <title>Selección de Personaje - Avatar</title> <!-- Título de la página -->
-
-  <!-- Preconexión para optimizar la carga de fuentes -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selección de Personaje - Avatar</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <!-- Fuentes personalizadas desde Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-
-  <!-- Enlace al archivo de estilos CSS -->
-  <link rel="stylesheet" href="styles.css"> 
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Contenedor principal -->
   <main class="contenedor">
-    <!-- Título principal -->
-    <h1>La Leyenda de Aang: El Avatar</h1>
-    <!-- Subtítulo -->
-    <h2>Elegí tu personaje</h2>
-
-    <!-- Sección de selección de personajes -->
-    <div class="personajes-seleccion" id="personajesSeleccion">
-      <!-- Botón para seleccionar a Aang -->
-      <button class="personaje" data-nombre="Aang">
-        <img src="assets/aang.png" alt="Aang, Maestro del Aire"> <!-- Imagen de Aang -->
-        <p>Aang (Aire)</p> <!-- Nombre y elemento de Aang -->
-      </button>
-      <!-- Botón para seleccionar a Katara -->
-      <button class="personaje" data-nombre="Katara">
-        <img src="assets/katara.png" alt="Katara, Maestra del Agua"> <!-- Imagen de Katara -->
-        <p>Katara (Agua)</p> <!-- Nombre y elemento de Katara -->
-      </button>
-      <!-- Botón para seleccionar a Toph -->
-      <button class="personaje" data-nombre="Toph">
-        <img src="assets/toph.png" alt="Toph Beifong, Maestra de la Tierra"> <!-- Imagen de Toph -->
-        <p>Toph (Tierra)</p> <!-- Nombre y elemento de Toph -->
-      </button>
-      <!-- Botón para seleccionar a Zuko -->
-      <button class="personaje" data-nombre="Zuko">
-        <img src="assets/zuko.png" alt="Zuko, Maestro del Fuego"> <!-- Imagen de Zuko -->
-        <p>Zuko (Fuego)</p> <!-- Nombre y elemento de Zuko -->
-      </button>
+    <div id="modalReglas" class="modal">
+      <div class="modal-contenido">
+        <span class="cerrar-modal">&times;</span>
+        <h2>Reglas del Juego</h2>
+        <div class="reglas-contenido">
+          <h3>🎮 Cómo Jugar</h3>
+          <ol>
+            <li>Primero, selecciona tu personaje favorito. La PC elegirá a su luchador al azar.</li>
+            <li>Cada jugador (tú y la PC) tiene 100 puntos de vida.</li>
+            <li>Por turnos, elige uno de los tres ataques disponibles.</li>
+          </ol>
+          <h3>⚔️ Sistema de Ataques</h3>
+          <div class="sistema-ataques">
+            <p>🦵 Patada vence a 👊 Puño</p>
+            <p>👊 Puño vence a 🌀 Barrida</p>
+            <p>🌀 Barrida vence a 🦵 Patada</p>
+          </div>
+          <div class="bonus-info">
+            <p>💥 Cuando uses un ataque que es fuerte contra el enemigo, ¡causarás más daño!</p>
+            <p>⚠️ Cuando uses un ataque débil, causarás menos daño.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Sección de botones de acción -->
-    <div class="acciones">
-        <button id="btnConfirmar" disabled>Confirmar selección</button>
+    <div id="modalOponente" class="modal">
+      <div class="modal-contenido">
+        <h2>Eligiendo Oponente...</h2>
+        <div class="pc-selection-area">
+          <div class="pc-selection-window">
+            <div id="pc-character-reel" class="pc-character-reel">
+              </div>
+          </div>
+        </div>
+        <p id="oponente-revelado-texto" class="oponente-revelado-texto"></p>
+      </div>
+    </div>
+
+    <div id="pantallaSeleccion" class="pantalla-seleccion">
+      <h1>La Leyenda de Aang: El Avatar</h1>
+      <button id="btnReglas" class="boton-reglas"><span class="icono-reglas">❔</span> Reglas del Juego</button>
+      <h2>Elegí tu personaje</h2>
+      <div class="personajes-seleccion" id="personajesSeleccion">
+        <button class="personaje" data-nombre="Aang"><div class="personaje-avatar"><img src="assets/aang.png" alt="Aang"></div><p>Aang</p></button>
+        <button class="personaje" data-nombre="Katara"><div class="personaje-avatar"><img src="assets/katara.png" alt="Katara"></div><p>Katara</p></button>
+        <button class="personaje" data-nombre="Toph"><div class="personaje-avatar"><img src="assets/toph.png" alt="Toph"></div><p>Toph</p></button>
+        <button class="personaje" data-nombre="Zuko"><div class="personaje-avatar"><img src="assets/zuko.png" alt="Zuko"></div><p>Zuko</p></button>
+      </div>
+      <div class="acciones">
         <button id="btnCombate" disabled>Iniciar combate</button>
+      </div>
+    </div>
+
+    <div id="pantallaCombate" class="pantalla-combate">
+      <h1>¡Combate Avatar!</h1>
+      <button id="btnReglasCombate" class="boton-reglas"><span class="icono-reglas">❔</span> Reglas del Juego</button>
+      <div class="ataques-container">
+        <div class="botones-ataque">
+          <button class="boton-ataque" id="btnPunio" data-ataque="punio"><div class="icono-ataque">👊</div><span>Puño</span></button>
+          <button class="boton-ataque" id="btnPatada" data-ataque="patada"><div class="icono-ataque">🦵</div><span>Patada</span></button>
+          <button class="boton-ataque" id="btnBarrida" data-ataque="barrida"><div class="icono-ataque">🌀</div><span>Barrida</span></button>
+        </div>
+      </div>
+      <div class="acciones acciones-combate">
+        <button id="btnAtacar" disabled>¡Atacar!</button>
+        <button id="btnReiniciar">Nuevo Juego</button>
+      </div>
+      <div class="combate-principal">
+        <div class="info-combate">
+          <div class="luchador">
+            <h3 id="nombreJugador">Jugador</h3>
+            <div class="avatar-combate" id="avatarJugador"><img id="imagenJugador" src="" alt="Avatar jugador"></div>
+            <div class="barra-vida"><div class="vida-actual" id="vidaJugador" style="width: 100%;"><div class="vida-texto" id="textoVidaJugador">100/100</div></div></div>
+          </div>
+          <div class="luchador">
+            <h3 id="nombrePC">PC</h3>
+            <div class="avatar-combate" id="avatarPC"><img id="imagenPC" src="" alt="Avatar PC"></div>
+            <div class="barra-vida"><div class="vida-actual" id="vidaPC" style="width: 100%;"><div class="vida-texto" id="textoVidaPC">100/100</div></div></div>
+          </div>
+        </div>
+        <div class="mensajes-combate">
+          <h4>Registro de Combate:</h4>
+          <div id="mensajesCombate"></div>
+        </div>
+      </div>
     </div>
   </main>
-
-  <!-- Archivo de JavaScript para manejar la lógica -->
-  <script src="scripts/script.js"></script>
+  <script src="script.js"></script>
 </body>
-
+</html>
